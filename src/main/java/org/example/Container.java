@@ -1,5 +1,8 @@
 package org.example;
 
+import lombok.Getter;
+import org.example.member.entity.Member;
+
 import java.util.Scanner;
 
 public class Container {
@@ -12,5 +15,13 @@ public class Container {
     }
     public static Scanner getSc() {
         return sc;
+    }
+
+    private static Member loginedMember = null;
+    public static Member getLoginedMember() {
+        return loginedMember;
+    }
+    public static void setLoginedMember(Member member) {
+        loginedMember = member;
     }
 }

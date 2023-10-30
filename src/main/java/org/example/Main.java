@@ -5,6 +5,6 @@ public class Main {
         Container.init();
         new App().run();
         Container.close();
-        //글 작성시, 로그인한 작성자 이름 남기게 하는 부분부터 막혔습니다
+        //삭제, 수정 글 작성자만 되게 작업중
     }
 }

@@ -7,9 +7,6 @@ import org.example.wiseSaying.controller.WiseSayingController;
 import java.util.Scanner;
 
 public class App {
-    public App() {
-
-    }
     public void run() {
 
         SystemController systemController = new SystemController();

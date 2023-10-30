@@ -19,7 +19,7 @@ public class WiseSayingController {
         System.out.printf("작가 : ");
         String author = Container.getSc().nextLine().trim();
         System.out.println(wiseSayingNum + "번 명언이 등록되었습니다.");
-        WiseSaying wiseSaying = new WiseSaying(wiseSayingNum, content, author);
+        WiseSaying wiseSaying = new WiseSaying(wiseSayingNum, content, author, Container.getLoginedMember().getUserId());
         wiseSayings.add(wiseSaying);
         wiseSayingNum++;
     }
@@ -29,11 +29,11 @@ public class WiseSayingController {
             System.out.println("명언이 존재하지 않습니다.");
             return;
         }
-        System.out.println("번호 / 작가 / 명언");
+        System.out.println("번호 / 작가 / 명언 / 작성자");
         System.out.println("----------------------");
         for (int i = wiseSayings.size() - 1; i >= 0; i--) {
             WiseSaying wiseSaying = wiseSayings.get(i);
-            System.out.printf("%d / %s / %s\n", wiseSaying.getId(), wiseSaying.getAuthor(), wiseSaying.getContent());
+            System.out.printf("%d / %s / %s / %s\n", wiseSaying.getId(), wiseSaying.getAuthor(), wiseSaying.getContent(), wiseSaying.getWriter());
         }
     }
 
@@ -52,8 +52,13 @@ public class WiseSayingController {
             System.out.println("해당 번호의 명언이 존재하지않습니다.");
         }
         else {
-            wiseSayings.remove(wiseSaying);
-            System.out.println(inputNum + "번 명언이 삭제되었습니다.");
+            if (wiseSaying.getWriter().equals(Container.getLoginedMember().getUserId())) {
+                wiseSayings.remove(wiseSaying);
+                System.out.println(inputNum + "번 명언이 삭제되었습니다.");
+            }
+            else {
+                System.out.println("글 작성자만 삭제가 가능합니다.");
+            }
         }
     }
 

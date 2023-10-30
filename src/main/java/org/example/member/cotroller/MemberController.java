@@ -2,6 +2,7 @@ package org.example.member.cotroller;
 
 import org.example.Container;
 import org.example.member.entity.Member;
+import org.example.util.Util;
 import org.example.wiseSaying.entity.WiseSaying;
 
 import java.time.LocalDate;
@@ -11,19 +12,16 @@ import java.util.List;
 public class MemberController {
     long id = 0;
     List<Member> members = new ArrayList<>();
-    Member loginedMember = null;
-
-    LocalDate now2 = LocalDate.now();
 
     public MemberController() {
-        Member user1 = new Member(0,"ㄱ","ㄱ", now2.toString());
+        Member user1 = new Member(0,"ㄱ","ㄱ", Util.nowDateTime());
         members.add(user1);
-        Member user2 = new Member(0,"ㄴ","ㄴ", now2.toString());
+        Member user2 = new Member(0,"ㄴ","ㄴ", Util.nowDateTime());
         members.add(user2);
     }
 
     public void signUp() {
-        if (loginedMember != null) {
+        if (Container.getLoginedMember() != null) {
             System.out.println("현재 로그인 상태 입니다.");
             return;
         }
@@ -58,9 +56,7 @@ public class MemberController {
 
         id++;
 
-        LocalDate now = LocalDate.now();
-
-        Member member = new Member(id, userId, userPassWord, now.toString());
+        Member member = new Member(id, userId, userPassWord, Util.nowDateTime());
         members.add(member);
         System.out.println(member.getUserId() + "님 회원가입이 완료되었습니다.");
     }
@@ -79,7 +75,7 @@ public class MemberController {
     }
 
     public void login() {
-        if (loginedMember != null) {
+        if (Container.getLoginedMember() != null) {
             System.out.println("현재 로그인 상태 입니다.");
             return;
         }
@@ -101,17 +97,17 @@ public class MemberController {
             return;
         }
 
-        loginedMember = member;
+        Container.setLoginedMember(member);
         System.out.println(member.getUserId() + "님 반갑습니다. 로그인이 완료되었습니다.");
     }
 
     public void logout() {
-        if (loginedMember == null) {
+        if (Container.getLoginedMember() == null) {
             System.out.println("현재 로그인 상태가 아닙니다.");
             return;
         }
 
-        loginedMember = null;
+        Container.setLoginedMember(null);
         System.out.println("로그아웃이 완료되었습니다.");
     }
     public Member findByUserId(String userId) {
