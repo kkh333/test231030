@@ -1,18 +1,16 @@
 package org.example.wiseSaying.controller;
 
 import org.example.Container;
-import org.example.member.cotroller.MemberController;
 import org.example.wiseSaying.entity.WiseSaying;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 
 public class WiseSayingController {
     long wiseSayingNum = 1;
     List<WiseSaying> wiseSayings = new ArrayList<>();
-    MemberController memberController = new MemberController();
+
     public void write() {
         System.out.printf("명언 : ");
         String content = Container.getSc().nextLine().trim();
@@ -50,13 +48,11 @@ public class WiseSayingController {
 
         if (wiseSaying == null) {
             System.out.println("해당 번호의 명언이 존재하지않습니다.");
-        }
-        else {
+        } else {
             if (wiseSaying.getWriter().equals(Container.getLoginedMember().getUserId())) {
                 wiseSayings.remove(wiseSaying);
                 System.out.println(inputNum + "번 명언이 삭제되었습니다.");
-            }
-            else {
+            } else {
                 System.out.println("글 작성자만 삭제가 가능합니다.");
             }
         }
@@ -75,8 +71,7 @@ public class WiseSayingController {
 
         if (wiseSaying == null) {
             System.out.println("해당 번호의 명언이 존재하지않습니다.");
-        }
-        else {
+        } else {
             if (wiseSaying.getWriter().equals(Container.getLoginedMember().getUserId())) {
                 System.out.println("기존 명언 : " + wiseSaying.getContent());
                 String content = Container.getSc().nextLine().trim();
@@ -85,12 +80,12 @@ public class WiseSayingController {
                 String author = Container.getSc().nextLine().trim();
                 wiseSaying.setAuthor(author);
                 System.out.println(inputNum + "번 명언이 수정되었습니다.");
-            }
-            else {
+            } else {
                 System.out.println("글 작성자만 수정이 가능합니다.");
             }
         }
     }
+
     public WiseSaying findById(long inputNum) {
         for (int i = 0; i < wiseSayings.size(); i++) {
             WiseSaying wiseSaying = wiseSayings.get(i);

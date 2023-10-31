@@ -4,8 +4,6 @@ import org.example.member.cotroller.MemberController;
 import org.example.system.controller.SystemController;
 import org.example.wiseSaying.controller.WiseSayingController;
 
-import java.util.Scanner;
-
 public class App {
     public void run() {
 
