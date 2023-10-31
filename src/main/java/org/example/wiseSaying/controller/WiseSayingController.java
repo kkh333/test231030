@@ -73,18 +73,22 @@ public class WiseSayingController {
 
         WiseSaying wiseSaying = this.findById(inputNum);
 
-
         if (wiseSaying == null) {
             System.out.println("해당 번호의 명언이 존재하지않습니다.");
         }
         else {
-            System.out.println("기존 명언 : " + wiseSaying.getContent());
-            String content = Container.getSc().nextLine().trim();
-            wiseSaying.setContent(content);
-            System.out.println("기존 작가 : " + wiseSaying.getAuthor());
-            String author = Container.getSc().nextLine().trim();
-            wiseSaying.setAuthor(author);
-            System.out.println(inputNum + "번 명언이 수정되었습니다.");
+            if (wiseSaying.getWriter().equals(Container.getLoginedMember().getUserId())) {
+                System.out.println("기존 명언 : " + wiseSaying.getContent());
+                String content = Container.getSc().nextLine().trim();
+                wiseSaying.setContent(content);
+                System.out.println("기존 작가 : " + wiseSaying.getAuthor());
+                String author = Container.getSc().nextLine().trim();
+                wiseSaying.setAuthor(author);
+                System.out.println(inputNum + "번 명언이 수정되었습니다.");
+            }
+            else {
+                System.out.println("글 작성자만 수정이 가능합니다.");
+            }
         }
     }
     public WiseSaying findById(long inputNum) {
