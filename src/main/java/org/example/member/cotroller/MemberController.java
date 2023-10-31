@@ -2,6 +2,7 @@ package org.example.member.cotroller;
 
 import org.example.Container;
 import org.example.member.entity.Member;
+import org.example.member.service.MemberService;
 import org.example.util.Util;
 import org.example.wiseSaying.entity.WiseSaying;
 
@@ -11,20 +12,15 @@ import java.util.List;
 
 public class MemberController {
     long id = 0;
-    List<Member> members = new ArrayList<>();
 
-    public MemberController() {
-        Member user1 = new Member(0,"ㄱ","ㄱ", Util.nowDateTime());
-        members.add(user1);
-        Member user2 = new Member(0,"ㄴ","ㄴ", Util.nowDateTime());
-        members.add(user2);
-    }
+    MemberService memberService = new MemberService();
 
     public void signUp() {
         if (Container.getLoginedMember() != null) {
             System.out.println("현재 로그인 상태 입니다.");
             return;
         }
+
         String userId;
         String userPassWord;
         String userPassWordConfirm;
@@ -32,7 +28,7 @@ public class MemberController {
             System.out.println("아이디를 입력해 주세요.");
             userId = Container.getSc().nextLine().trim();
 
-            Member member = this.findByUserId(userId);
+            Member member = this.memberService.getMemberfindByUserId(userId);
 
             if (member != null) {
                 System.out.println("중복된 아이디입니다.");
@@ -56,22 +52,24 @@ public class MemberController {
 
         id++;
 
-        Member member = new Member(id, userId, userPassWord, Util.nowDateTime());
-        members.add(member);
-        System.out.println(member.getUserId() + "님 회원가입이 완료되었습니다.");
+        try {
+            this.memberService.join(id, userId, userPassWord);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println(userId + "님 회원가입이 완료되었습니다.");
     }
 
     public void userList() {
-        if (members.size() == 0) {
+        if (memberService.getMembersSize() == 0) {
             System.out.println("회원이 존재하지 않습니다.");
             return;
         }
         System.out.println("번호 / 가입일 / 아이디 / 비밀번호");
         System.out.println("----------------------");
-        for (int i = members.size() - 1; i >= 0; i--) {
-            Member member = members.get(i);
-            System.out.printf("%d / %s / %s / %s\n", member.getId(), member.getRegDate(), member.getUserId(), member.getUserPassword());
-        }
+        this.memberService.getAllMemberList();
     }
 
     public void login() {
@@ -85,7 +83,7 @@ public class MemberController {
         System.out.printf("비밀번호 : ");
         String userPassword = Container.getSc().nextLine().trim();
 
-        Member member = this.findByUserId(userId);
+        Member member = this.memberService.getMemberfindByUserId(userId);
 
         if (member == null) {
             System.out.println("존재하는 아이디가 없습니다.");
@@ -110,13 +108,5 @@ public class MemberController {
         Container.setLoginedMember(null);
         System.out.println("로그아웃이 완료되었습니다.");
     }
-    public Member findByUserId(String userId) {
-        for (int i = 0; i < members.size(); i++) {
-            Member member = members.get(i);
-            if (member.getUserId().equals(userId)) {
-                return member;
-            }
-        }
-        return null;
-    }
+
 }
