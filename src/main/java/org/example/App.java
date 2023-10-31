@@ -1,10 +1,27 @@
 package org.example;
 
+import org.example.db.DBConnection;
 import org.example.member.cotroller.MemberController;
 import org.example.system.controller.SystemController;
 import org.example.wiseSaying.controller.WiseSayingController;
 
 public class App {
+    public App () {
+        DBConnection.DB_NAME = "proj1";
+        DBConnection.DB_USER = "root";
+        DBConnection.DB_PASSWORD = "";
+        DBConnection.DB_PORT = 3306;
+
+        Container.getDBconnection().connect();
+        Container.getDBconnection().insert(
+                "INSERT INTO article\n" +
+                        "SET id = 5,\n" +
+                        "title = \"test5\",\n" +
+                        "content = \"test5\",\n" +
+                        "memberId = 5,\n" +
+                        "regDate = now();"
+        );
+    }
     public void run() {
 
         SystemController systemController = new SystemController();

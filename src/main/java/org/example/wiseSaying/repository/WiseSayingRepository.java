@@ -1,14 +1,37 @@
 package org.example.wiseSaying.repository;
 
 import org.example.Container;
+import org.example.db.DBConnection;
 import org.example.member.entity.Member;
 import org.example.wiseSaying.entity.WiseSaying;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class WiseSayingRepository {
-    List<WiseSaying> wiseSayings = new ArrayList<>();
+    long lastId = 0;
+    private  List<WiseSaying> wiseSayings;
+    private DBConnection dbConnection;
+
+    public WiseSayingRepository () {
+        dbConnection = Container.getDBconnection();
+        wiseSayings = new ArrayList<>();
+    }
+
+    public List<WiseSaying> getArticleListAll() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(String.format("SELECT * FROM article"));
+
+        List<Map<String, Object>> rows = dbConnection.selectRows(sb.toString());
+
+        for (Map<String, Object> row : rows) {
+            wiseSayings.add(new WiseSaying(row));
+        }
+
+        return wiseSayings;
+    }
 
     public void write(long wiseSayingNum, String content, String author, String userId) {
         WiseSaying wiseSaying = new WiseSaying(wiseSayingNum, content, author, userId);

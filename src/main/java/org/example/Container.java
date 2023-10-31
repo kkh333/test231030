@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.db.DBConnection;
 import org.example.member.entity.Member;
 
 import java.util.Scanner;
@@ -27,5 +28,13 @@ public class Container {
 
     public static void setLoginedMember(Member member) {
         loginedMember = member;
+    }
+
+    private static DBConnection dbConnection;
+    public static DBConnection getDBconnection() {
+        if (dbConnection == null) {
+            dbConnection = new DBConnection();
+        }
+        return dbConnection;
     }
 }
