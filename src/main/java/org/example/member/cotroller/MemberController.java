@@ -3,12 +3,6 @@ package org.example.member.cotroller;
 import org.example.Container;
 import org.example.member.entity.Member;
 import org.example.member.service.MemberService;
-import org.example.util.Util;
-import org.example.wiseSaying.entity.WiseSaying;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MemberController {
     long id = 0;

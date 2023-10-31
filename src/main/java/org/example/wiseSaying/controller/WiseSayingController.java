@@ -4,10 +4,6 @@ import org.example.Container;
 import org.example.wiseSaying.entity.WiseSaying;
 import org.example.wiseSaying.service.WiseSayingService;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
 public class WiseSayingController {
     long wiseSayingNum = 1;
 
@@ -49,13 +45,11 @@ public class WiseSayingController {
 
         WiseSaying wiseSaying = this.wiseSayingService.getWiseSayingfindById(inputNum);
 
-        if (wiseSaying.getWriter().equals("비회원")) {
-            System.out.println("비회원 글은 삭제할 수 없습니다.");
-            return;
-        }
-
         if (wiseSaying == null) {
             System.out.println("해당 번호의 명언이 존재하지않습니다.");
+        }
+        else if (wiseSaying.getWriter().equals("비회원")) {
+            System.out.println("비회원 글은 삭제할 수 없습니다.");
         }
         else {
             this.wiseSayingService.remove(wiseSaying);
@@ -73,13 +67,11 @@ public class WiseSayingController {
 
         WiseSaying wiseSaying = this.wiseSayingService.getWiseSayingfindById(inputNum);
 
-        if (wiseSaying.getWriter().equals("비회원")) {
-            System.out.println("비회원 글은 수정할 수 없습니다.");
-            return;
-        }
-
         if (wiseSaying == null) {
             System.out.println("해당 번호의 명언이 존재하지않습니다.");
+        }
+        else if (wiseSaying.getWriter().equals("비회원")) {
+            System.out.println("비회원 글은 수정할 수 없습니다.");
         }
         else {
             this.wiseSayingService.modify(wiseSaying);
